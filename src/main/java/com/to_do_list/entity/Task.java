@@ -3,6 +3,7 @@ package com.to_do_list.entity;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 public class Task {
@@ -12,6 +13,10 @@ public class Task {
     @Column(nullable = false)
     private String taskName;
     private String description;
+    @Column(name = "created_date", nullable = false)
+    private LocalDateTime createdDate;
+    @Column(name = "finished_date", nullable = false)
+    private LocalDateTime finishDate;
     private LocalDate dueDate;
     @Enumerated(EnumType.STRING)
     private Status status;
@@ -22,9 +27,11 @@ public class Task {
     private Category category;
 
     public Task(){}
-    public Task(String taskName, String description, LocalDate dueDate, Status status, Priority priority, Category category) {
+    public Task(String taskName, String description, LocalDateTime createdDate, LocalDateTime finishDate, LocalDate dueDate, Status status, Priority priority, Category category) {
         this.taskName = taskName;
         this.description = description;
+        this.createdDate = createdDate;
+        this.finishDate = finishDate;
         this.dueDate = dueDate;
         this.status = status;
         this.priority = priority;
@@ -45,6 +52,22 @@ public class Task {
 
     public void setTaskName(String taskName) {
         this.taskName = taskName;
+    }
+
+    public LocalDateTime getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(LocalDateTime createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public LocalDateTime getFinishDate() {
+        return finishDate;
+    }
+
+    public void setFinishDate(LocalDateTime finishDate) {
+        this.finishDate = finishDate;
     }
 
     public String getDescription() {

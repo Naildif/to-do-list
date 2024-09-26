@@ -12,6 +12,10 @@ import com.to_do_list.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Clock;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -52,6 +56,7 @@ public class TaskServiceImpl implements TaskService{
     @Override
     public TaskDTO createTask(TaskDTO taskDTO) {
         Task newTask = convertDTOToEntity(taskDTO);
+        newTask.setCreatedDate(LocalDateTime.now(ZoneOffset.UTC));
         Task savedTask = taskRepository.save(newTask);
         return convertEntityToDTO(savedTask);
     }
@@ -72,6 +77,9 @@ public class TaskServiceImpl implements TaskService{
                     .orElseThrow(()-> new CategoryNotFoundException("Category with ID " + taskDTO.getCategoryId()
                             + " not found (｡•́︿•̀｡)"));
             oldTask.setCategory(category);
+        }
+        if (oldTask.getStatus() == Status.COMPLETED && oldTask.getFinishDate() ==null){
+            oldTask.setFinishDate(LocalDateTime.now(ZoneOffset.UTC));
         }
         Task updatedTask = taskRepository.save(oldTask);
         return convertEntityToDTO(updatedTask);

@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class TaskDTO {
     private Long id;
@@ -15,16 +16,19 @@ public class TaskDTO {
     private String taskName;
     @Size(max = 500, message = "(˶˃ᆺ˂˶) \nDescription must not exceed 500 characters.")
     private String description;
+    private LocalDateTime createdDate;
+    private LocalDateTime finishDate;
     private LocalDate dueDate;
     private Status status;
     private Priority priority;
     private Long categoryId;
 
     public TaskDTO(){}
-    public TaskDTO(String taskName, String description, LocalDate dueDate, Status status, Priority priority, Long categoryId){
+    public TaskDTO(String taskName, String description, LocalDateTime createdDate, LocalDateTime finishDate, LocalDate dueDate, Status status, Priority priority, Long categoryId){
         this.taskName = taskName;
-        this.description =description;
         this.dueDate=dueDate;
+        this.createdDate=createdDate;
+        this.finishDate=finishDate;
         this.status=status;
         this.priority=priority;
         this.categoryId =categoryId;
@@ -52,6 +56,22 @@ public class TaskDTO {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public LocalDateTime getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(LocalDateTime createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public LocalDateTime getFinishDate() {
+        return finishDate;
+    }
+
+    public void setFinishDate(LocalDateTime finishDate) {
+        this.finishDate = finishDate;
     }
 
     public LocalDate getDueDate() {
